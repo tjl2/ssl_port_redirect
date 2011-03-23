@@ -1,0 +1,25 @@
+server {
+  listen 444;
+
+  <% if @server_names and !@server_names.empty? %>
+  <%= "server_name #{@server_names.join(" ")};" %>
+  <% else %>
+  server_name _;
+  <% end %>
+
+  # To enable ssl certificates uncomment this:
+  ssl on;
+  ssl_certificate /data/nginx/ssl/<%= @app_name %>.crt;
+  ssl_certificate_key /data/nginx/ssl/<%= @app_name %>.key;
+  ssl_protocols SSLv3 TLSv1;
+  ssl_ciphers ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:!LOW:!SSLv2:!EXPORT;
+
+  access_log /var/log/engineyard/nginx/<%= @app_name %>.access.ssl.log main;
+  error_log /var/log/engineyard/nginx/<%= @app_name %>.error.log error;
+  
+  location / {
+    include /etc/nginx/common/proxy.conf;
+    proxy_pass http://localhost;
+  }
+}
+
