@@ -1,3 +1,12 @@
+# needed to forward user's IP address to rails
+proxy_set_header  X-Real-IP         $remote_addr;
+proxy_set_header  X-Forwarded-For   $proxy_add_x_forwarded_for;
+proxy_set_header  Host              $http_host;
+proxy_set_header  X-Forwarded-Proto $scheme;
+
+proxy_redirect off;
+proxy_max_temp_file_size 0;
+
 server {
   listen 444;
 
@@ -17,7 +26,6 @@ server {
   error_log /var/log/engineyard/nginx/<%= @app_name %>.error.log error;
   
   location / {
-    include /etc/nginx/common/proxy.conf;
     proxy_pass http://localhost;
   }
 }
