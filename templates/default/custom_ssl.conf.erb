@@ -7,7 +7,6 @@ server {
   server_name _;
   <% end %>
 
-  # To enable ssl certificates uncomment this:
   ssl on;
   ssl_certificate /data/nginx/ssl/<%= @app_name %>.crt;
   ssl_certificate_key /data/nginx/ssl/<%= @app_name %>.key;
