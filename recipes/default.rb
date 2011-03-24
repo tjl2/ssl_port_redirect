@@ -45,6 +45,9 @@ if node.instance_role == 'app_master'
   execute "iptables preroute redirect 443 to 444" do
     command "iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 444"
     action :run
-    not_if `/sbin/iptables -L -n -t nat`.match(/^REDIRECT\s.*tcp\s.*\-\-\s.*[0\.]{3}0\/0\s.*[0\.]{3}0\/0\s.*tcp\s.*dpt\:443\s.*redir\s.*ports\s.*444$/)
+    not_if do
+      `/sbin/iptables -L PREROUTING -n -t nat`.match(
+        /REDIRECT\s.*tcp\s.*\-\-\s.*[0\.]{3}0\/0\s.*[0\.]{3}0\/0\s.*tcp\s.*dpt\:443\s.*redir\s.*ports\s.*444/)
+    end
   end
 end
