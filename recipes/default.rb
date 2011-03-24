@@ -13,7 +13,7 @@ if node.instance_role == 'app_master'
     action :nothing
   end
   
-  # Drop in a replacement simplified nginx ssl config
+  # Drop in a replacement nginx ssl config
   node["applications"].each_key do |app_name|
     # SSL apps have 2 vhosts configured
     if node["applications"][app_name]["vhosts"].length == 2
@@ -30,13 +30,21 @@ if node.instance_role == 'app_master'
         })
         notifies :run, resources(:execute => "restart-nginx"), :delayed
       end
+
+      # Use a modified proxy config, which won't try to serve assets over SSL
+      remote_file "/data/nginx/common/proxy.conf" do
+        owner   node[:owner_name]
+        group   node[:group_name]
+        mode    0644
+        source  "custom_ssl_proxy.conf"
+      end
     end
   end
 
   # Add our iptables redirection
   execute "iptables preroute redirect 443 to 444" do
-    # TODO: make this conditional so we don't keep running this rule
     command "iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 444"
     action :run
+    not_if `/sbin/iptables -L -n -t nat`.match(/^REDIRECT\s.*tcp\s.*\-\-\s.*[0\.]{3}0\/0\s.*[0\.]{3}0\/0\s.*tcp\s.*dpt\:443\s.*redir\s.*ports\s.*444$/)
   end
 end
