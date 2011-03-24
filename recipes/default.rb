@@ -9,7 +9,7 @@ if node.instance_role == 'app_master'
   end
 
   execute "restart-nginx" do
-    command "/etc/init.d/nginx restart"
+    command "/etc/init.d/nginx reload"
     action :nothing
   end
   
