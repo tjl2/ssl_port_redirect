@@ -42,4 +42,15 @@ if node.instance_role == 'app_master'
         /REDIRECT\s.*tcp\s.*\-\-\s.*[0\.]{3}0\/0\s.*[0\.]{3}0\/0\s.*tcp\s.*dpt\:443\s.*redir\s.*ports\s.*444/)
     end
   end
+
+  # Save the iptables settings so we persist a reboot
+  execute "iptables save" do
+    command "/etc/init.d/iptables save"
+    action :run
+  end
+
+  # Ensure that the iptables init script is set to start on boot
+  service "iptables" do
+    action [:enable, :start]
+  end
 end
