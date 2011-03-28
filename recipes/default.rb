@@ -30,14 +30,6 @@ if node.instance_role == 'app_master'
         })
         notifies :run, resources(:execute => "restart-nginx"), :delayed
       end
-
-      # Use a modified proxy config, which won't try to serve assets over SSL
-      #remote_file "/data/nginx/common/proxy.conf" do
-      #  owner   node[:owner_name]
-      #  group   node[:group_name]
-      #  mode    0644
-      #  source  "custom_ssl_proxy.conf"
-      #end
     end
   end
 
