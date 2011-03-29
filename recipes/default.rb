@@ -53,4 +53,13 @@ if node.instance_role == 'app_master'
   service "iptables" do
     action [:enable, :start]
   end
+
+  # Add a MOTD, reminding support staff that this is in place
+  remote_file "/etc/motd" do
+    owner "root"
+    group "root"
+    mode  "0644"
+    source "motd.txt"
+    action :create
+  end
 end

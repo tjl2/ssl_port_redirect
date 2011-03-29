@@ -1,0 +1,7 @@
+** NOTE TO EY SUPPORT **
+This instance has made use of the ssl_port_redirect
+custom chef recipe. SSL connections might be being
+redirected by iptables to 444.
+Confirm this is in use by running:
+  iptables --list -t nat
+** END NOTE **
