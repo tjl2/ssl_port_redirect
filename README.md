@@ -11,6 +11,10 @@ Our current cluster architecture ([http://docs.engineyard.com/appcloud/guides/en
 Using iptables, this cookbook will redirect all port 443 traffic onto port 444, directly to Nginx and bypassing HAProxy. Nginx will then forward requests back in to HAProxy on port 80, just as a normal non-SSL request would behave. This then allows the Nginx to add a header to the request, after decrypting it.
 Please be aware that this setup is going to make your application master instance be responsible for decrypting *all* SSL traffic, which depending on your usage, may lead to causing increased CPU load on the applicaiton master.
 
+## Compatibility with Passenger
+
+**Please note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [https://github.com/tjl2/rack_forwarded_for_override](this rack middleware) for your app before following the instructions below.
+
 ## Usage instructions
 
 First, make sure that you have SSL enabled for an app in the environment where this recipe is going to be run, via the SSL tab on the dashboard.
