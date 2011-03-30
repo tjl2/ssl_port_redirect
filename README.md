@@ -13,7 +13,7 @@ Please be aware that this setup is going to make your application master instanc
 
 ## Compatibility with Passenger
 
-**PLease note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [this rack middleware](https://github.com/tjl2/rack_forwarded_for_override) for your app before following the instructions below.
+**Please note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [this rack middleware](https://github.com/tjl2/rack_forwarded_for_override) for your app before following the instructions below.
 
 ## Usage instructions
 
