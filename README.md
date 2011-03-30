@@ -11,9 +11,14 @@ Our current cluster architecture ([outlined in our AppCloud docs](http://docs.en
 Using iptables, this cookbook will redirect all port 443 traffic onto port 444, directly to Nginx and bypassing HAProxy. Nginx will then forward requests back in to HAProxy on port 80, just as a normal non-SSL request would behave. This then allows the Nginx to add a header to the request, after decrypting it.
 Please be aware that this setup is going to make your application master instance be responsible for decrypting *all* SSL traffic, which depending on your usage, may lead to causing increased CPU load on the applicaiton master.
 
-## Compatibility with Passenger
+## Things to be aware of
+### Compatibility with Passenger
 
 **Please note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [this rack middleware](https://github.com/tjl2/rack_forwarded_for_override) for your app before following the instructions below.
+
+### Takeovers
+
+During a takeover process (where your app master fails and we automatically promote another instance to the master), the IP address will revert to being incorrect in the logs until a new application instance has been successfully booted and added to the cluster. This can last for a few minutes and wil be corrected once the instance is configured and your custom recipes are run on the cluster.
 
 ## Usage instructions
 
