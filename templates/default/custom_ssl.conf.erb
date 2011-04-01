@@ -1,4 +1,10 @@
-# needed to forward user's IP address to rails
+#########################################################
+### NOTE TO EY SUPPORT - this file was created by the ###
+### ssl_port_redirect recipe. Please be aware that    ###
+### iptables is redirecting requests on port 443 onto ###
+### 444. This config then proxies us back to HAProxy  ###
+### on port 80.                                       ###
+#########################################################
 proxy_set_header  X-Real-IP         $remote_addr;
 proxy_set_header  X-Forwarded-For   $proxy_add_x_forwarded_for;
 proxy_set_header  Host              $http_host;
