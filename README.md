@@ -16,9 +16,6 @@ Please be aware that this setup is going to make your application master instanc
 
 **Please note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [this rack middleware](https://github.com/tjl2/rack_forwarded_for_override) for your app before following the instructions below.
 
-### Takeovers
-
-During a takeover process (where your app master fails and we automatically promote another instance to the master), the IP address will revert to being incorrect in the logs until a new application instance has been successfully booted and added to the cluster. This can last for a few minutes and wil be corrected once the instance is configured and your custom recipes are run on the cluster.
 
 ## Usage instructions
 
