@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 
-if node.instance_role == 'app_master'
+if ['app_master','app'].include?(node[:instance_role])
   ey_cloud_report "ssl port redirect" do
     message "configuring redirection of SSL traffic to port 444"
   end
