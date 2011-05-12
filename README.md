@@ -16,6 +16,14 @@ Please be aware that this setup is going to make your application master instanc
 
 **Please note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [this rack middleware](https://github.com/tjl2/rack_forwarded_for_override) for your app before following the instructions below.
 
+### Redirects to SSL
+If you are redirecting HTTP requests to HTTPS in Nginx, rewrites that check the protocol will fail (as all requests are decrypted before being proxied to your app instances). If you need to do this kind of redirection, then you can check for the presence of the EY-SSL-Fix header like this:
+
+    if ( $http_ey_ssl_fix != 'Enabled') { 
+      rewrite ^/(.*) https://$host/$1 permanent; 
+    }
+
+
 ### Increased Load on App Master
 Now that all SSL traffic is being decrypted on the app master instance, you may find that the CPU load on this instance increases. While this should be negligible, if you force all your traffic through HTTPS, then please be aware that this extra load may become noticeable and may slow down response times of your app.
 
