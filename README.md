@@ -16,7 +16,7 @@ Please be aware that this setup is going to make your application master instanc
 
 **Please note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [this rack middleware](https://github.com/tjl2/rack_forwarded_for_override) for your app before following the instructions below.
 
-### Redirects to SSL
+### Redirects to HTTPS
 If you are redirecting HTTP requests to HTTPS in Nginx, rewrites that check the protocol will fail (as all requests are decrypted before being proxied to your app instances). If you need to do this kind of redirection, then you can check for the presence of the EY-SSL-Fix header like this:
 
     if ( $http_ey_ssl_fix != 'Enabled') { 
