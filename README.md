@@ -16,6 +16,9 @@ Please be aware that this setup is going to make your application master instanc
 
 **Please note** that if you are using Passenger (version 2 or 3) as your stack, you must also download and install [this rack middleware](https://github.com/tjl2/rack_forwarded_for_override) for your app before following the instructions below.
 
+### Increased Load on App Master
+Now that all SSL traffic is being decrypted on the app master instance, you may find that the CPU load on this instance increases. While this should be negligible, if you force all your traffic through HTTPS, then please be aware that this extra load may become noticeable and may slow down response times of your app.
+
 
 ## Usage instructions
 
