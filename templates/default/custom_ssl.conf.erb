@@ -29,6 +29,8 @@ server {
   ssl_protocols SSLv3 TLSv1;
   ssl_ciphers ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:!LOW:!SSLv2:!EXPORT;
 
+  client_max_body_size 100M;
+
   access_log /var/log/engineyard/nginx/<%= @app_name %>.access.ssl.log main;
   error_log /var/log/engineyard/nginx/<%= @app_name %>.error.log error;
   
